@@ -8,7 +8,10 @@ const getProgress = (total, goal) => {
     return Math.floor((total/goal)*100) + '%';
 }
 
-
+// Object of width of progress bar
+const getProgressBarWidth = (width) => {
+    return {width};
+}
 
 export const TripsCount = ({total, tropic, trek, club, goal=15}) => (
     <div className="trips-count">
