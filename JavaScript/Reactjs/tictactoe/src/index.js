@@ -9,6 +9,7 @@ function Square(props) {
         </button>
     );
 }
+
 function CalculateWinner(squares) {
     const lines = [
         [0, 1, 2],
