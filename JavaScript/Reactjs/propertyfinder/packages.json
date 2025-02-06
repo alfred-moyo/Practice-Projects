@@ -1,0 +1,9 @@
+{
+  "name": "property-finder",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "jest-expo": "23.0.0",
+    "react-native-scripts": "1.9.0",
+    "react-test-renderer": "16.0.0"
+  },
