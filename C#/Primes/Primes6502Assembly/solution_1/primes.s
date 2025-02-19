@@ -69,3 +69,55 @@ clock_string: .byte 0
     .storage 8
 remainder: .storage 1
 ram_config: .word 0
+
+start:
+    ; select kernal and I/O ROM, RAM 0
+    lda MMUCR
+    sta ram_config
+    lda #RAM_0
+    sta MMUCR
+
+    ; make botton 8K RAM shared
+    lda MMURCR
+    sta ram_config+1
+    and #%11110000
+    ora #%00000110
+    sta MMURCR
+
+    ; set clock to 0
+    lda #0
+    tax 
+    tay
+    jsr SETTIM
+
+    lda #"-"
+    jsr BSOUT
+
+    ; init first half of buffer (RAM 0)
+    jsr init_halfbuf
+
+    ; init second half of buffer (RAM 1)
+    lda #RAM_1
+    sta MMUCR
+
+    lda #"-"
+    jsr BSOUT
+
+    jsr init_halfbuf
+
+    ; select RAM 0
+    lda #RAM_0
+    sta MMUCR
+
+    ;
+    ; main logic
+    ;
+
+    ; set pointer to buffer
+    lda #<BUF_START
+    sta CURPTR
+    lda #>BUF_START
+    sta CURPTR+1
+
+    ; load first buffer byte
+    ldy #0
